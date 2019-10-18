@@ -1,6 +1,8 @@
 """Class representing a timestamp h:mm'ss.xx"""
 import re
 
+pattern = re.compile(r"(\d):(\d{2})'(\d{2}.\d{2})")
+
 class Timestamp:
 
     def __init__(self, value):
@@ -24,9 +26,16 @@ class Timestamp:
             val -= 60 * mins
         return "{0:d}:{1:02d}'{2:02.2f}".format(hour,mins,val)
 
+    def __add__(self, other):
+        return Timestamp(self.value + float(other))
+
+    def __sub__(self, other):
+        return Timestamp(self.value - float(other))
+
 def parse(value):
     """"Parse a timestamp in the format h:mm'ss.xx"""
-    match = re.match(r"(\d):(\d{2})'(\d{2}.\d{2})",value)
+    global pattern
+    match = pattern.match(value)
     if not match:
         raise ValueError("Timestamp must be in h:mm'ss.xx format")
     hour = int(match.group(1))
@@ -39,4 +48,8 @@ if __name__ == "__main__":
     print(t)
     print(t.value)
     print(float(t))
+    print(t - 20.2)
+    t2 = Timestamp("0:00'40.30")
+    print(t + t2)
+    print(t - t2)
     
