@@ -32,6 +32,12 @@ class Timestamp:
     def __sub__(self, other):
         return Timestamp(self.value - float(other))
 
+    def __gt__(self,other):
+        return self.value > float(other)
+
+    def __lt__(self,other):
+        return self.value < float(other)
+
 def parse(value):
     """"Parse a timestamp in the format h:mm'ss.xx"""
     global pattern
@@ -52,4 +58,5 @@ if __name__ == "__main__":
     t2 = Timestamp("0:00'40.30")
     print(t + t2)
     print(t - t2)
-    
+    print(t > t2)
+    print(t < t2)
