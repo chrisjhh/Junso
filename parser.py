@@ -1,4 +1,4 @@
-"""Class to parse a records file"""
+"--Class to parse a records file--
 import re
 from .Record import Record
 
